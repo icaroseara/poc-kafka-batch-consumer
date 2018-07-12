@@ -2,19 +2,20 @@ from confluent_kafka import Consumer
 
 kc = Consumer({
     'bootstrap.servers': 'localhost:9092',
-    'group.id': 'test',
+    'group.id': 'group-identifier',
 })
 
-kc.subscribe(['test'])
+kc.subscribe(['events.created'])
 running = True
+
 
 def process_messages(batch_msgs):
     print('messages processed:{}'.format(len(batch_msgs)))
     for msg in batch_msgs:
-	    print(msg.value())
+        print(msg.value())
+
 
 while running:
-    batch_size=10
-    msgs = kc.consume(num_messages=10, timeout=10)
+    msgs = kc.consume(num_messages=100, timeout=30)
     process_messages(msgs)
-c.close()
+kc.close()
