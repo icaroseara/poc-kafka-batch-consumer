@@ -1,11 +1,15 @@
 # POC Consume messages in batch using Kafka
 
 ## Setup kafka and zookeeper
+```bash
 brew install kafka
+```
 
 ## Running the services
+```bash
 brew services start zookeeper
 brew services start kafka
+```
 
 ## Install dependencies
 ```bash
@@ -21,4 +25,3 @@ python producer.py
 ```bash
 python consumer.py
 ```
-
