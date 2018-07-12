@@ -1,3 +1,5 @@
+import time
+
 from confluent_kafka import Consumer
 
 kc = Consumer({
@@ -16,6 +18,8 @@ def process_messages(batch_msgs):
 
 
 while running:
-    msgs = kc.consume(num_messages=100, timeout=30)
+    msgs = kc.consume(num_messages=10)
     process_messages(msgs)
+    print('\nthe next pull will happens in 10 seconds...')
+    time.sleep(10)
 kc.close()
