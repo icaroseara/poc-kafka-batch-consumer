@@ -20,7 +20,7 @@ running = True
 def process_messages(batch_msgs):
     print('messages processed: {}'.format(len(batch_msgs)))
     for msg in batch_msgs:
-        print(msg.value())
+        print('message: "{}" offset: {}'.format(msg.value().decode("utf-8"), msg.offset()))
 
 
 print('Kafka consumer started!')
