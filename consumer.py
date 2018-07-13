@@ -4,13 +4,16 @@ from confluent_kafka import Consumer
 
 from settings import KAFKA_SERVER, KAFKA_TOPIC
 
-FLUSH_INTERVAL = 10
-BATCH_SIZE = 50
+FLUSH_INTERVAL = 5
+BATCH_SIZE = 100
 GROUP_ID = 'group-id'
 
 kc = Consumer({
     'bootstrap.servers': KAFKA_SERVER,
     'group.id': GROUP_ID,
+    'default.topic.config': {
+        'auto.offset.reset': 'smallest'
+    },
 })
 
 kc.subscribe([KAFKA_TOPIC])
