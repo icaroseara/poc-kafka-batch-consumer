@@ -28,7 +28,7 @@ def process_messages(batch_msgs):
 
 print('Kafka consumer started!')
 while running:
-    msgs = kc.consume(num_messages=BATCH_SIZE)
+    msgs = kc.consume(num_messages=BATCH_SIZE, timeout=FLUSH_INTERVAL)
     process_messages(msgs)
     print('\nnext batch in {} seconds...'.format(FLUSH_INTERVAL))
     time.sleep(FLUSH_INTERVAL)
