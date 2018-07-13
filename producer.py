@@ -1,8 +1,10 @@
 from confluent_kafka import Producer
 
+from settings import KAFKA_SERVER, KAFKA_TOPIC
+
 MESSAGE_COUNT = 1000
 
-p = Producer({'bootstrap.servers': 'localhost:9092'})
+p = Producer({'bootstrap.servers': KAFKA_SERVER})
 
 
 def delivery_report(err, msg):
@@ -14,8 +16,9 @@ def delivery_report(err, msg):
         print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
 
 
+print('Kafka producer started!')
 for i in range(MESSAGE_COUNT):
-    message = 'hello world - {}'.format(i)
-    p.produce('events.created', value=message, callback=delivery_report)
-    print('{}/{} - {}'.format(i, MESSAGE_COUNT, message))
+    message = 'hello world - {}'.format(i + 1)
+    p.produce(KAFKA_TOPIC, value=message, callback=delivery_report)
+    print('{}/{} - {}'.format(i + 1, MESSAGE_COUNT, message))
 p.flush()

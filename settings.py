@@ -1,0 +1,4 @@
+KAFKA_HOSTNAME = 'localhost'
+KAFKA_PORT = 9092
+KAFKA_SERVER = '{}:{}'.format(KAFKA_HOSTNAME, KAFKA_PORT)
+KAFKA_TOPIC = 'events.created'

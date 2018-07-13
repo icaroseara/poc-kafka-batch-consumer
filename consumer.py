@@ -2,24 +2,31 @@ import time
 
 from confluent_kafka import Consumer
 
+from settings import KAFKA_SERVER, KAFKA_TOPIC
+
+FLUSH_INTERVAL = 10
+BATCH_SIZE = 50
+GROUP_ID = 'group-id'
+
 kc = Consumer({
-    'bootstrap.servers': 'localhost:9092',
-    'group.id': 'group-identifier',
+    'bootstrap.servers': KAFKA_SERVER,
+    'group.id': GROUP_ID,
 })
 
-kc.subscribe(['events.created'])
+kc.subscribe([KAFKA_TOPIC])
 running = True
 
 
 def process_messages(batch_msgs):
-    print('messages processed:{}'.format(len(batch_msgs)))
+    print('messages processed: {}'.format(len(batch_msgs)))
     for msg in batch_msgs:
         print(msg.value())
 
 
+print('Kafka consumer started!')
 while running:
-    msgs = kc.consume(num_messages=10)
+    msgs = kc.consume(num_messages=BATCH_SIZE)
     process_messages(msgs)
-    print('\nthe next pull will happens in 10 seconds...')
-    time.sleep(10)
+    print('\nnext batch in {} seconds...'.format(FLUSH_INTERVAL))
+    time.sleep(FLUSH_INTERVAL)
 kc.close()
