@@ -32,7 +32,6 @@ pip install -r requirements.txt
 ```
 
 ## Produce messages
-
 ```bash
 python producer.py
 ```
